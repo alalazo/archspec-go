@@ -1,4 +1,4 @@
-module github.com/alalazo/archspec-go/archspec
+module github.com/alalazo/archspec-go
 
 go 1.13
 

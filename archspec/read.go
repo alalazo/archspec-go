@@ -1,34 +1,28 @@
-package main
+package archspec
 
 import (
-	"fmt"
 	"bufio"
-	"log"
 	"github.com/markbates/pkger"
 )
 
-// Read reads a file
-func Read(filename string) {
+// ReadJSONAsStringVec reads microarchitectures.json and returns each
+// line in a string vector
+func ReadJSONAsStringVec() ([]string, error) {
+	pkger.Include("/archspec/json")
+	filename := "/archspec/json/cpu/microarchitectures.json"
 	file, err := pkger.Open(filename)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 	var txtlines []string
- 
+
 	for scanner.Scan() {
 		txtlines = append(txtlines, scanner.Text())
 	}
- 
-	for _, eachline := range txtlines {
-		fmt.Println(eachline)
-	}
-}
 
-func main() {
-	pkger.Include("/json")
-	Read("/json/cpu/microarchitectures.json")
+	return txtlines, nil
 }
